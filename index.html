@@ -4,33 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>La DoÑa - Comida Rápida</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --green-deep:#0a2f1f;      /* Verde oscuro sugerido */
-      --green-neon:#39ff14;      /* Verde fosforescente */
+      --green-deep:#0a2f1f;
+      --green-neon:#39ff14;
       --black:#0b0b0b;
       --card:#0f1d16;
       --soft:#0f0f0f;
     }
     html,body{background:#0b0b0b;}
     body{font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji",sans-serif;}
-    /* Glow utility */
-    .neon{ text-shadow: none; }
-    .ring-neon{ box-shadow: none; }
     .glass{
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       background: rgba(15, 29, 22, .6);
     }
-    .carousel-dot[aria-current="true"]{
-      background: var(--green-neon);
-      box-shadow: 0 0 10px rgba(57,255,20,.8);
-    }
+    .carousel-dot[aria-current="true"]{ background: var(--green-neon); }
     .no-tap-highlight{ -webkit-tap-highlight-color: transparent; }
+    /* Mini badge animation */
+    .pop { animation: pop .2s ease; }
+    @keyframes pop { from{transform:scale(.9)} to{transform:scale(1)} }
   </style>
 </head>
 <body class="text-white">
@@ -38,7 +34,6 @@
   <header class="relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
       <a href="#top" class="flex items-center gap-3 no-tap-highlight">
-        <!-- Simple SVG Logo -->
         <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--green-deep)] ring-2 ring-[var(--green-neon)]">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M3 12c0-4.97 4.03-9 9-9 2.4 0 4.59.94 6.2 2.47l-1.82 1.8A6.96 6.96 0 0 0 12 5a7 7 0 1 0 7 7h3c0 5.52-4.48 10-10 10S3 17.52 3 12Z" fill="#39ff14"/>
@@ -50,11 +45,21 @@
           <p class="text-xs text-zinc-300">Comida rápida con sabor casero</p>
         </div>
       </a>
-      <nav class="hidden md:flex items-center gap-4">
+      <nav class="hidden md:flex items-center gap-3">
         <a href="#menu" class="px-4 py-2 rounded-full bg-[var(--green-deep)] text-white hover:text-black hover:bg-[var(--green-neon)] transition ring-1 ring-[var(--green-neon)]">Menú</a>
         <a href="#delivery" class="px-4 py-2 rounded-full bg-[var(--green-deep)] text-white hover:text-black hover:bg-[var(--green-neon)] transition ring-1 ring-[var(--green-neon)]">Delivery</a>
         <a href="#contacto" class="px-4 py-2 rounded-full bg-[var(--green-deep)] text-white hover:text-black hover:bg-[var(--green-neon)] transition ring-1 ring-[var(--green-neon)]">Contacto</a>
+        <!-- Cart button desktop -->
+        <button id="cartBtn" class="relative ml-2 px-4 py-2 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
+          🛒 Carrito
+          <span id="cartCount" class="absolute -top-2 -right-2 text-xs bg-black text-white px-1.5 py-0.5 rounded-full ring-2 ring-[var(--green-neon)]">0</span>
+        </button>
       </nav>
+      <!-- Cart button mobile -->
+      <button id="cartBtnM" class="md:hidden relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
+        🛒 <span>Carrito</span>
+        <span id="cartCountM" class="absolute -top-2 -right-2 text-xs bg-black text-white px-1.5 py-0.5 rounded-full ring-2 ring-[var(--green-neon)]">0</span>
+      </button>
     </div>
 
     <!-- Carousel Hero -->
@@ -93,8 +98,8 @@
             <div class="relative max-w-4xl mx-auto text-center">
               <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 text-[var(--green-neon)]">Promos y combos</h2>
               <p class="text-base sm:text-lg text-zinc-200 mb-6">Consulta el menú y descubre tus favoritos.</p>
-              <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
-                Contáctanos
+              <a href="#menu" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
+                Ordenar
               </a>
             </div>
           </div>
@@ -102,22 +107,15 @@
 
         <!-- Controls -->
         <div class="absolute inset-x-0 bottom-4 flex items-center justify-center gap-3">
-          <button type="button" data-prev aria-label="Anterior" class="no-tap-highlight inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">
-            ‹
-          </button>
+          <button type="button" data-prev aria-label="Anterior" class="no-tap-highlight inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">‹</button>
           <div class="flex items-center gap-2 px-3 py-2 rounded-full glass ring-1 ring-white/10">
             <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/60" aria-label="Ir a 1" data-go="0" aria-current="true"></button>
             <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/60" aria-label="Ir a 2" data-go="1"></button>
             <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/60" aria-label="Ir a 3" data-go="2"></button>
           </div>
-          <button type="button" data-next aria-label="Siguiente" class="no-tap-highlight inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">
-            ›
-          </button>
-
+          <button type="button" data-next aria-label="Siguiente" class="no-tap-highlight inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">›</button>
           <button type="button" data-toggle-play aria-label="Pausar" class="ml-3 no-tap-highlight inline-flex items-center gap-2 px-3 py-2 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">
-            <span data-play-icon class="hidden">▶</span>
-            <span data-pause-icon>⏸</span>
-            <span class="text-sm">Auto</span>
+            <span data-play-icon class="hidden">▶</span><span data-pause-icon>⏸</span><span class="text-sm">Auto</span>
           </button>
         </div>
       </div>
@@ -132,15 +130,9 @@
         <p class="text-zinc-300 text-sm">Promos, combos y novedades cada semana.</p>
       </div>
       <div class="flex items-center gap-3">
-        <a target="_blank" rel="noopener" href="https://facebook.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
-          <span class="text-lg">📘</span><span class="font-semibold hidden sm:inline">Facebook</span>
-        </a>
-        <a target="_blank" rel="noopener" href="https://instagram.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
-          <span class="text-lg">📸</span><span class="font-semibold hidden sm:inline">Instagram</span>
-        </a>
-        <a target="_blank" rel="noopener" href="https://tiktok.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
-          <span class="text-lg">🎵</span><span class="font-semibold hidden sm:inline">TikTok</span>
-        </a>
+        <a target="_blank" rel="noopener" href="https://facebook.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition"><span class="text-lg">📘</span><span class="font-semibold hidden sm:inline">Facebook</span></a>
+        <a target="_blank" rel="noopener" href="https://instagram.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition"><span class="text-lg">📸</span><span class="font-semibold hidden sm:inline">Instagram</span></a>
+        <a target="_blank" rel="noopener" href="https://tiktok.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition"><span class="text-lg">🎵</span><span class="font-semibold hidden sm:inline">TikTok</span></a>
       </div>
     </div>
   </section>
@@ -154,17 +146,16 @@
 
     <!-- Menu Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Card helper component -->
       <!-- CALDOS -->
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
         <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Caldos</h3>
-        <ul class="space-y-3">
-          <li class="flex items-center justify-between"><span>Costilla</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
-          <li class="flex items-center justify-between"><span>Pescado en Leche</span><span class="font-semibold text-[var(--green-neon)]">11K</span></li>
-          <li class="flex items-center justify-between"><span>Pescado en Agua</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
-          <li class="flex items-center justify-between"><span>Carne</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
-          <li class="flex items-center justify-between"><span>Pollo</span><span class="font-semibold text-[var(--green-neon)]">9K</span></li>
-          <li class="flex items-center justify-between"><span>Huevo</span><span class="font-semibold text-[var(--green-neon)]">8K</span></li>
+        <ul class="space-y-3" id="cat-caldos">
+          <li class="flex items-center justify-between"><span>Costilla</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">12000</span><button data-add data-id="cal-costilla" data-name="Caldo de Costilla" data-price="12000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Pescado en Leche</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">11000</span><button data-add data-id="cal-pleche" data-name="Caldo Pescado en Leche" data-price="11000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Pescado en Agua</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">10000</span><button data-add data-id="cal-pagua" data-name="Caldo Pescado en Agua" data-price="10000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Carne</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">10000</span><button data-add data-id="cal-carne" data-name="Caldo de Carne" data-price="10000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Pollo</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">9000</span><button data-add data-id="cal-pollo" data-name="Caldo de Pollo" data-price="9000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Huevo</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">8000</span><button data-add data-id="cal-huevo" data-name="Caldo de Huevo" data-price="8000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
         </ul>
       </section>
 
@@ -172,11 +163,11 @@
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
         <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Hamburguesa</h3>
         <ul class="space-y-3">
-          <li class="flex items-center justify-between"><span>Carne</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
-          <li class="flex items-center justify-between"><span>Pollo</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
-          <li class="flex items-center justify-between"><span>Mixta</span><span class="font-semibold text-[var(--green-neon)]">15K</span></li>
-          <li class="flex items-center justify-between"><span>Ranchera</span><span class="font-semibold text-[var(--green-neon)]">16K</span></li>
-          <li class="flex items-center justify-between"><span>La Doña</span><span class="font-semibold text-[var(--green-neon)]">17K</span></li>
+          <li class="flex items-center justify-between"><span>Carne</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">12000</span><button data-add data-id="ham-carne" data-name="Hamburguesa de Carne" data-price="12000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Pollo</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">12000</span><button data-add data-id="ham-pollo" data-name="Hamburguesa de Pollo" data-price="12000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Mixta</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">15000</span><button data-add data-id="ham-mixta" data-name="Hamburguesa Mixta" data-price="15000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Ranchera</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">16000</span><button data-add data-id="ham-ranchera" data-name="Hamburguesa Ranchera" data-price="16000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>La Doña</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">17000</span><button data-add data-id="ham-dona" data-name="Hamburguesa La Doña" data-price="17000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
         </ul>
       </section>
 
@@ -184,12 +175,12 @@
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
         <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Salchipapas</h3>
         <ul class="space-y-3">
-          <li class="flex items-center justify-between"><span>Salchipapa Pequeña</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
-          <li class="flex items-center justify-between"><span>Salchipapa Grande</span><span class="font-semibold text-[var(--green-neon)]">15K</span></li>
-          <li class="flex items-center justify-between"><span>Salchipollo Pequeño</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
-          <li class="flex items-center justify-between"><span>Salchipollo Grande</span><span class="font-semibold text-[var(--green-neon)]">17K</span></li>
-          <li class="flex items-center justify-between"><span>Choripapa</span><span class="font-semibold text-[var(--green-neon)]">16K</span></li>
-          <li class="flex items-center justify-between"><span>Choripollo</span><span class="font-semibold text-[var(--green-neon)]">18K</span></li>
+          <li class="flex items-center justify-between"><span>Salchipapa Pequeña</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">10000</span><button data-add data-id="sal-peq" data-name="Salchipapa Pequeña" data-price="10000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Salchipapa Grande</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">15000</span><button data-add data-id="sal-gra" data-name="Salchipapa Grande" data-price="15000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Salchipollo Pequeño</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">12000</span><button data-add data-id="salpollo-peq" data-name="Salchipollo Pequeño" data-price="12000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Salchipollo Grande</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">17000</span><button data-add data-id="salpollo-gra" data-name="Salchipollo Grande" data-price="17000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Choripapa</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">16000</span><button data-add data-id="chori-papa" data-name="Choripapa" data-price="16000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Choripollo</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">18000</span><button data-add data-id="chori-pollo" data-name="Choripollo" data-price="18000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
         </ul>
       </section>
 
@@ -197,11 +188,11 @@
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
         <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Perro Caliente</h3>
         <ul class="space-y-3">
-          <li class="flex items-center justify-between"><span>Sencillo</span><span class="font-semibold text-[var(--green-neon)]">6K</span></li>
-          <li class="flex items-center justify-between"><span>Mixto</span><span class="font-semibold text-[var(--green-neon)]">8K</span></li>
-          <li class="flex items-center justify-between"><span>Llanero</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
-          <li class="flex items-center justify-between"><span>Especial</span><span class="font-semibold text-[var(--green-neon)]">13K</span></li>
-          <li class="flex items-center justify-between"><span>Choriperro</span><span class="font-semibold text-[var(--green-neon)]">13K</span></li>
+          <li class="flex items-center justify-between"><span>Sencillo</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">6000</span><button data-add data-id="dog-sencillo" data-name="Perro Sencillo" data-price="6000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Mixto</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">8000</span><button data-add data-id="dog-mixto" data-name="Perro Mixto" data-price="8000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Llanero</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">10000</span><button data-add data-id="dog-llanero" data-name="Perro Llanero" data-price="10000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Especial</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">13000</span><button data-add data-id="dog-especial" data-name="Perro Especial" data-price="13000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Choriperro</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">13000</span><button data-add data-id="dog-choriperro" data-name="Choriperro" data-price="13000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
         </ul>
       </section>
 
@@ -209,28 +200,29 @@
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
         <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Arepa Burger</h3>
         <ul class="space-y-3">
-          <li class="flex items-center justify-between"><span>Carne</span><span class="font-semibold text-[var(--green-neon)]">9K</span></li>
-          <li class="flex items-center justify-between"><span>Pollo</span><span class="font-semibold text-[var(--green-neon)]">9K</span></li>
-          <li class="flex items-center justify-between"><span>Mixta</span><span class="font-semibold text-[var(--green-neon)]">11K</span></li>
-          <li class="flex items-center justify-between"><span>Especial</span><span class="font-semibold text-[var(--green-neon)]">13K</span></li>
+          <li class="flex items-center justify-between"><span>Carne</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">9000</span><button data-add data-id="ab-carne" data-name="Arepa Burger Carne" data-price="9000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Pollo</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">9000</span><button data-add data-id="ab-pollo" data-name="Arepa Burger Pollo" data-price="9000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Mixta</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">11000</span><button data-add data-id="ab-mixta" data-name="Arepa Burger Mixta" data-price="11000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
+          <li class="flex items-center justify-between"><span>Especial</span><div class="flex items-center gap-3"><span class="font-semibold text-[var(--green-neon)]">13000</span><button data-add data-id="ab-especial" data-name="Arepa Burger Especial" data-price="13000" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></div></li>
         </ul>
       </section>
 
-      <!-- AREPAS -->
+      <!-- AREPAS (sin precio, consulta) -->
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
         <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Arepas</h3>
         <ul class="space-y-3">
-          <li class="flex items-center justify-between"><span>Pollo</span></li>
-          <li class="flex items-center justify-between"><span>Mixtas</span></li>
-          <li class="flex items-center justify-between"><span>Pollo / Tocineta</span></li>
-          <li class="flex items-center justify-between"><span>Pollo / Champiñón</span></li>
-          <li class="flex items-center justify-between"><span>Pollo, Jamón y Queso</span></li>
-          <li class="flex items-center justify-between"><span>Salchicha, Jamón y Queso</span></li>
-          <li class="flex items-center justify-between"><span>Carne Molida con Chorizo</span></li>
-          <li class="flex items-center justify-between"><span>Queso</span></li>
-          <li class="flex items-center justify-between"><span>Molleja</span></li>
+          <!-- Para estas, agregamos como "consulta" con precio 0 y se indica en WA -->
+          <li class="flex items-center justify-between"><span>Pollo</span><button data-add data-id="arepa-pollo" data-name="Arepa de Pollo (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Mixtas</span><button data-add data-id="arepa-mixta" data-name="Arepa Mixta (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Pollo / Tocineta</span><button data-add data-id="arepa-pt" data-name="Arepa Pollo/Tocineta (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Pollo / Champiñón</span><button data-add data-id="arepa-pc" data-name="Arepa Pollo/Champiñón (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Pollo, Jamón y Queso</span><button data-add data-id="arepa-pjq" data-name="Arepa Pollo, Jamón y Queso (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Salchicha, Jamón y Queso</span><button data-add data-id="arepa-sjq" data-name="Arepa Salchicha, Jamón y Queso (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Carne Molida con Chorizo</span><button data-add data-id="arepa-cmc" data-name="Arepa Carne Molida con Chorizo (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Queso</span><button data-add data-id="arepa-queso" data-name="Arepa de Queso (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
+          <li class="flex items-center justify-between"><span>Molleja</span><button data-add data-id="arepa-molleja" data-name="Arepa de Molleja (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
         </ul>
-        <p class="text-xs text-zinc-400 mt-3">Consulta precios al pedir.</p>
+        <p class="text-xs text-zinc-400 mt-3">Precios de arepas a confirmar al pedir.</p>
       </section>
     </div>
   </main>
@@ -278,7 +270,6 @@
         </form>
       </div>
 
-      <!-- Horarios / Info -->
       <div class="rounded-2xl p-6 glass ring-1 ring-[var(--green-neon)]/30">
         <h4 class="text-xl font-bold text-[var(--green-neon)] mb-4">Información útil</h4>
         <ul class="space-y-3 text-zinc-200">
@@ -331,6 +322,31 @@
     </div>
   </div>
 
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="fixed top-0 right-0 h-full w-[92vw] max-w-md bg-[var(--card)] text-white shadow-2xl translate-x-full transition-transform z-50 ring-1 ring-[var(--green-neon)]/30">
+    <div class="flex items-center justify-between px-5 py-4 bg-[var(--green-deep)]">
+      <h3 class="text-lg font-bold">Tu carrito</h3>
+      <button id="cartClose" class="text-2xl leading-none">×</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <ul id="cartList" class="space-y-3 max-h-[50vh] overflow-auto pr-1"></ul>
+      <div class="border-t border-white/10 pt-4">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-zinc-300">Subtotal</span>
+          <span id="cartSubtotal" class="font-bold">0</span>
+        </div>
+        <label class="block text-sm text-zinc-300 mb-1">Nota para cocina (opcional)</label>
+        <input id="cartNote" type="text" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Sin cebolla, extra salsa, etc.">
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <button id="cartClear" class="px-4 py-3 rounded-xl bg-black text-white ring-1 ring-white/15 hover:bg-black/80">Vaciar</button>
+          <a id="cartCheckout" target="_blank" rel="noopener" href="#" class="text-center px-4 py-3 rounded-xl bg-[var(--green-neon)] text-black font-semibold hover:scale-[1.02] transition pointer-events-none opacity-50">Enviar a WhatsApp</a>
+        </div>
+        <p class="text-[11px] text-zinc-500 mt-2">Al continuar se abrirá WhatsApp con tu pedido detallado.</p>
+      </div>
+    </div>
+  </div>
+  <div id="cartBackdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity z-40"></div>
+
   <!-- Footer -->
   <footer class="mt-14 border-t border-white/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-3">
@@ -347,65 +363,42 @@
       const slides = Array.from(track.children);
       const prevBtn = root.querySelector('[data-prev]');
       const nextBtn = root.querySelector('[data-next]');
-      const dotWrap = root.querySelectorAll('.carousel-dot');
+      const dots = root.querySelectorAll('.carousel-dot');
       const playBtn = root.querySelector('[data-toggle-play]');
       const playIcon = root.querySelector('[data-play-icon]');
       const pauseIcon = root.querySelector('[data-pause-icon]');
-      let index = 0;
-      let timer = null;
+      let index = 0, timer = null;
       const DURATION = 5000;
 
       function update(){
-        slides.forEach((s, i)=>{
-          const offset = (i - index) * 100;
-          s.style.transform = `translateX(${offset}%)`;
-        });
-        dotWrap.forEach((d,i)=>{
-          d.setAttribute('aria-current', i===index ? 'true':'false');
-        });
+        slides.forEach((s, i)=>{ s.style.transform = `translateX(${(i-index)*100}%)`; });
+        dots.forEach((d,i)=> d.setAttribute('aria-current', i===index ? 'true':'false'));
       }
-      function go(i){
-        index = (i + slides.length) % slides.length;
-        update();
-      }
+      function go(i){ index = (i + slides.length) % slides.length; update(); }
       function next(){ go(index+1); }
       function prev(){ go(index-1); }
+      function play(){ clearInterval(timer); timer = setInterval(next, DURATION); playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); playBtn.setAttribute('aria-label','Pausar'); }
+      function pause(){ clearInterval(timer); timer = null; playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); playBtn.setAttribute('aria-label','Reproducir'); }
 
-      function play(){
-        clearInterval(timer);
-        timer = setInterval(next, DURATION);
-        playIcon.classList.add('hidden');
-        pauseIcon.classList.remove('hidden');
-        playBtn.setAttribute('aria-label','Pausar');
-      }
-      function pause(){
-        clearInterval(timer);
-        timer = null;
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
-        playBtn.setAttribute('aria-label','Reproducir');
-      }
-
-      prevBtn.addEventListener('click', ()=>{ prev(); if(timer) { play(); } });
-      nextBtn.addEventListener('click', ()=>{ next(); if(timer) { play(); } });
-      dotWrap.forEach(d=> d.addEventListener('click', ()=>{ go(+d.dataset.go); if(timer){ play(); } }));
+      prevBtn.addEventListener('click', ()=>{ prev(); if(timer) play(); });
+      nextBtn.addEventListener('click', ()=>{ next(); if(timer) play(); });
+      dots.forEach(d=> d.addEventListener('click', ()=>{ go(+d.dataset.go); if(timer) play(); }));
       playBtn.addEventListener('click', ()=> timer ? pause() : play());
 
-      // Swipe on mobile
+      // Swipe
       let startX=null;
       root.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
       root.addEventListener('touchend', (e)=>{
         if(startX===null) return;
         const dx = e.changedTouches[0].clientX - startX;
-        if(Math.abs(dx) > 50){ dx<0 ? next() : prev(); if(timer){ play(); } }
+        if(Math.abs(dx) > 50){ dx<0 ? next() : prev(); if(timer) play(); }
         startX=null;
       });
 
-      // Start autoplay
       play();
     })();
 
-    // Delivery form -> build WhatsApp message
+    // Delivery form -> WhatsApp message
     (function(){
       const form = document.getElementById('deliveryForm');
       const preview = document.getElementById('previewMsg');
@@ -429,7 +422,6 @@
       cotizarBtn.addEventListener('click', ()=>{
         const data = Object.fromEntries(new FormData(form).entries());
         data.envases = document.getElementById('envases').checked;
-        // Simple validation
         if(!data.nombre || !data.direccion || !data.barrio || !data.pedido){
           preview.textContent = 'Por favor completa los campos requeridos para generar el mensaje.';
           enviar.classList.add('pointer-events-none','opacity-50');
@@ -458,15 +450,9 @@
 
       function setOpen(v){
         open = v;
-        if(open){
-          panel.style.opacity = '1';
-          panel.style.transform = 'translateY(0)';
-          panel.style.pointerEvents = 'auto';
-        } else {
-          panel.style.opacity = '0';
-          panel.style.transform = 'translateY(24px)';
-          panel.style.pointerEvents = 'none';
-        }
+        panel.style.opacity = v ? '1' : '0';
+        panel.style.transform = v ? 'translateY(0)' : 'translateY(24px)';
+        panel.style.pointerEvents = v ? 'auto' : 'none';
       }
       toggle.addEventListener('click', ()=> setOpen(!open));
       close.addEventListener('click', ()=> setOpen(false));
@@ -489,19 +475,142 @@
       build();
     })();
 
-    // Smooth scroll for in-page links
+    // Cart system -> WhatsApp checkout
+    (function(){
+      const phone = '573112683691';
+      const cart = new Map(); // id -> {id,name,price,qty}
+      const btns = document.querySelectorAll('[data-add]');
+      const count = document.getElementById('cartCount');
+      const countM = document.getElementById('cartCountM');
+      const btn = document.getElementById('cartBtn');
+      const btnM = document.getElementById('cartBtnM');
+      const drawer = document.getElementById('cartDrawer');
+      const close = document.getElementById('cartClose');
+      const backdrop = document.getElementById('cartBackdrop');
+      const list = document.getElementById('cartList');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const clearBtn = document.getElementById('cartClear');
+      const checkout = document.getElementById('cartCheckout');
+      const note = document.getElementById('cartNote');
+
+      function formatCOP(n){ return new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(n); }
+
+      function openDrawer(){
+        drawer.style.transform = 'translateX(0)';
+        backdrop.style.opacity = '1';
+        backdrop.style.pointerEvents = 'auto';
+      }
+      function closeDrawer(){
+        drawer.style.transform = 'translateX(100%)';
+        backdrop.style.opacity = '0';
+        backdrop.style.pointerEvents = 'none';
+      }
+      btn.addEventListener('click', openDrawer);
+      btnM.addEventListener('click', openDrawer);
+      close.addEventListener('click', closeDrawer);
+      backdrop.addEventListener('click', closeDrawer);
+
+      function updateBadge(){
+        const totalQty = Array.from(cart.values()).reduce((a,i)=> a+i.qty, 0);
+        count.textContent = totalQty;
+        countM.textContent = totalQty;
+        // small pop
+        count.classList.add('pop'); countM.classList.add('pop');
+        setTimeout(()=>{ count.classList.remove('pop'); countM.classList.remove('pop'); }, 200);
+      }
+
+      function render(){
+        list.innerHTML = '';
+        let subtotal = 0;
+        cart.forEach(item=>{
+          subtotal += item.price * item.qty;
+          const li = document.createElement('li');
+          li.className = 'flex items-center gap-3 justify-between bg-black/30 rounded-xl px-3 py-2 ring-1 ring-white/10';
+          li.innerHTML = `
+            <div class="min-w-0">
+              <p class="font-semibold truncate">${item.name}</p>
+              <p class="text-xs text-zinc-400">${formatCOP(item.price)} c/u</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button data-dec="${item.id}" class="w-8 h-8 rounded-lg bg-black text-white">-</button>
+              <span class="w-6 text-center">${item.qty}</span>
+              <button data-inc="${item.id}" class="w-8 h-8 rounded-lg bg-[var(--green-neon)] text-black">+</button>
+              <button data-rem="${item.id}" class="ml-2 text-xs px-2 py-1 rounded-lg bg-red-600 text-white">Quitar</button>
+            </div>
+          `;
+          list.appendChild(li);
+        });
+        subtotalEl.textContent = formatCOP(subtotal);
+        if(cart.size===0){
+          list.innerHTML = '<li class="text-sm text-zinc-400">Tu carrito está vacío.</li>';
+        }
+        // Enable/disable checkout
+        if(cart.size>0){
+          checkout.classList.remove('pointer-events-none','opacity-50');
+          const text = buildWhatsAppText(subtotal);
+          checkout.href = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+        }else{
+          checkout.classList.add('pointer-events-none','opacity-50');
+          checkout.href = '#';
+        }
+      }
+
+      function buildWhatsAppText(subtotal){
+        const lines = ['Hola La DoÑa, quiero hacer este pedido:'];
+        cart.forEach(i=>{
+          const priceTxt = i.price>0 ? ` - ${formatCOP(i.price)} c/u` : ' - precio a confirmar';
+          lines.push(`• ${i.name} x${i.qty}${priceTxt}`);
+        });
+        lines.push(`Subtotal: ${formatCOP(subtotal)}`);
+        if(note.value.trim()) lines.push(`Nota: ${note.value.trim()}`);
+        lines.push('Gracias!');
+        return lines.join('\n');
+      }
+
+      // Handle add buttons
+      btns.forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const id = b.dataset.id;
+          const name = b.dataset.name;
+          const price = parseInt(b.dataset.price,10)||0;
+          const old = cart.get(id);
+          if(old){ old.qty += 1; } else { cart.set(id, {id,name,price,qty:1}); }
+          updateBadge(); render();
+        });
+      });
+
+      // Delegated inc/dec/remove
+      list.addEventListener('click', (e)=>{
+        const t = e.target;
+        if(t.matches('[data-inc]')){
+          const id = t.getAttribute('data-inc'); cart.get(id).qty += 1; updateBadge(); render();
+        }else if(t.matches('[data-dec]')){
+          const id = t.getAttribute('data-dec'); const it = cart.get(id); it.qty = Math.max(1, it.qty-1); updateBadge(); render();
+        }else if(t.matches('[data-rem]')){
+          const id = t.getAttribute('data-rem'); cart.delete(id); updateBadge(); render();
+        }
+      });
+
+      clearBtn.addEventListener('click', ()=>{
+        cart.clear(); updateBadge(); render();
+      });
+
+      note.addEventListener('input', render);
+
+      // Init
+      updateBadge(); render();
+    })();
+
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
         const id = a.getAttribute('href');
         if(id.length>1){
           const el = document.querySelector(id);
-          if(el){
-            e.preventDefault();
-            el.scrollIntoView({behavior:'smooth', block:'start'});
-          }
+          if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
         }
       });
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fbb12e020bb08a',t:'MTc1Nzk3NjcyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fbe8e7a7e2a4b9',t:'MTc1Nzk3OTAwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
