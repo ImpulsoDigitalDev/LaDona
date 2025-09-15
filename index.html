@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La DoÑa - Comida Rápida</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green-deep:#0a2f1f;      /* Verde oscuro sugerido */
+      --green-neon:#39ff14;      /* Verde fosforescente */
+      --black:#0b0b0b;
+      --card:#0f1d16;
+      --soft:#0f0f0f;
+    }
+    html,body{background:#0b0b0b;}
+    body{font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji",sans-serif;}
+    /* Glow utility */
+    .neon{ text-shadow: none; }
+    .ring-neon{ box-shadow: none; }
+    .glass{
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(15, 29, 22, .6);
+    }
+    .carousel-dot[aria-current="true"]{
+      background: var(--green-neon);
+      box-shadow: 0 0 10px rgba(57,255,20,.8);
+    }
+    .no-tap-highlight{ -webkit-tap-highlight-color: transparent; }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Header + Navbar -->
+  <header class="relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3 no-tap-highlight">
+        <!-- Simple SVG Logo -->
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--green-deep)] ring-2 ring-[var(--green-neon)]">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 12c0-4.97 4.03-9 9-9 2.4 0 4.59.94 6.2 2.47l-1.82 1.8A6.96 6.96 0 0 0 12 5a7 7 0 1 0 7 7h3c0 5.52-4.48 10-10 10S3 17.52 3 12Z" fill="#39ff14"/>
+            <path d="M9.5 12.5h5M9.5 9h5M9.5 16h3" stroke="#0b0b0b" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--green-neon)]">La DoÑa</h1>
+          <p class="text-xs text-zinc-300">Comida rápida con sabor casero</p>
+        </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-4">
+        <a href="#menu" class="px-4 py-2 rounded-full bg-[var(--green-deep)] text-white hover:text-black hover:bg-[var(--green-neon)] transition ring-1 ring-[var(--green-neon)]">Menú</a>
+        <a href="#delivery" class="px-4 py-2 rounded-full bg-[var(--green-deep)] text-white hover:text-black hover:bg-[var(--green-neon)] transition ring-1 ring-[var(--green-neon)]">Delivery</a>
+        <a href="#contacto" class="px-4 py-2 rounded-full bg-[var(--green-deep)] text-white hover:text-black hover:bg-[var(--green-neon)] transition ring-1 ring-[var(--green-neon)]">Contacto</a>
+      </nav>
+    </div>
+
+    <!-- Carousel Hero -->
+    <section class="relative">
+      <div id="carousel" class="relative w-full h-[48vh] sm:h-[60vh] lg:h-[70vh] overflow-hidden rounded-none">
+        <!-- Slides -->
+        <div class="absolute inset-0 transition-transform duration-700 ease-out will-change-transform" data-carousel-track>
+          <!-- Slide 1 -->
+          <div class="absolute inset-0 flex items-center justify-center p-8" data-index="0" style="transform: translateX(0%);">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center brightness-75"></div>
+            <div class="relative max-w-4xl mx-auto text-center">
+              <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 text-[var(--green-neon)]">Sabor que enamora</h2>
+              <p class="text-base sm:text-lg text-zinc-200 mb-6">Caldos, hamburguesas, salchipapas y más. Todo fresco, al instante.</p>
+              <a href="#menu" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
+                Ver Menú
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="absolute inset-0 flex items-center justify-center p-8" data-index="1" style="transform: translateX(100%);">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1606756790138-261db96c51c1?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center brightness-75"></div>
+            <div class="absolute inset-0 opacity-0 sm:opacity-100 bg-[url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
+            <div class="relative max-w-4xl mx-auto text-center">
+              <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 text-[var(--green-neon)]">Delivery rápido</h2>
+              <p class="text-base sm:text-lg text-zinc-200 mb-6">Pide por WhatsApp y lo llevamos a tu puerta.</p>
+              <a href="#delivery" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-deep)] text-white ring-2 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
+                Pedir ahora
+              </a>
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="absolute inset-0 flex items-center justify-center p-8" data-index="2" style="transform: translateX(200%);">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550547660-1b08f1e5c48e?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center brightness-75"></div>
+            <div class="absolute inset-0 opacity-0 sm:opacity-100 bg-[url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
+            <div class="relative max-w-4xl mx-auto text-center">
+              <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 text-[var(--green-neon)]">Promos y combos</h2>
+              <p class="text-base sm:text-lg text-zinc-200 mb-6">Consulta el menú y descubre tus favoritos.</p>
+              <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
+                Contáctanos
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="absolute inset-x-0 bottom-4 flex items-center justify-center gap-3">
+          <button type="button" data-prev aria-label="Anterior" class="no-tap-highlight inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">
+            ‹
+          </button>
+          <div class="flex items-center gap-2 px-3 py-2 rounded-full glass ring-1 ring-white/10">
+            <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/60" aria-label="Ir a 1" data-go="0" aria-current="true"></button>
+            <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/60" aria-label="Ir a 2" data-go="1"></button>
+            <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/60" aria-label="Ir a 3" data-go="2"></button>
+          </div>
+          <button type="button" data-next aria-label="Siguiente" class="no-tap-highlight inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">
+            ›
+          </button>
+
+          <button type="button" data-toggle-play aria-label="Pausar" class="ml-3 no-tap-highlight inline-flex items-center gap-2 px-3 py-2 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">
+            <span data-play-icon class="hidden">▶</span>
+            <span data-pause-icon>⏸</span>
+            <span class="text-sm">Auto</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <!-- Socials -->
+  <section id="contacto" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 p-5 rounded-2xl glass ring-1 ring-[var(--green-neon)]/30">
+      <div class="text-center md:text-left">
+        <h3 class="text-xl sm:text-2xl font-bold text-[var(--green-neon)]">Síguenos</h3>
+        <p class="text-zinc-300 text-sm">Promos, combos y novedades cada semana.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a target="_blank" rel="noopener" href="https://facebook.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
+          <span class="text-lg">📘</span><span class="font-semibold hidden sm:inline">Facebook</span>
+        </a>
+        <a target="_blank" rel="noopener" href="https://instagram.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
+          <span class="text-lg">📸</span><span class="font-semibold hidden sm:inline">Instagram</span>
+        </a>
+        <a target="_blank" rel="noopener" href="https://tiktok.com" class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-deep)] ring-1 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
+          <span class="text-lg">🎵</span><span class="font-semibold hidden sm:inline">TikTok</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <main id="menu" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--green-neon)]">Menú</h2>
+      <p class="text-zinc-300">Precios en COP</p>
+    </div>
+
+    <!-- Menu Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card helper component -->
+      <!-- CALDOS -->
+      <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
+        <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Caldos</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center justify-between"><span>Costilla</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
+          <li class="flex items-center justify-between"><span>Pescado en Leche</span><span class="font-semibold text-[var(--green-neon)]">11K</span></li>
+          <li class="flex items-center justify-between"><span>Pescado en Agua</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
+          <li class="flex items-center justify-between"><span>Carne</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
+          <li class="flex items-center justify-between"><span>Pollo</span><span class="font-semibold text-[var(--green-neon)]">9K</span></li>
+          <li class="flex items-center justify-between"><span>Huevo</span><span class="font-semibold text-[var(--green-neon)]">8K</span></li>
+        </ul>
+      </section>
+
+      <!-- HAMBURGUESA -->
+      <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
+        <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Hamburguesa</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center justify-between"><span>Carne</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
+          <li class="flex items-center justify-between"><span>Pollo</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
+          <li class="flex items-center justify-between"><span>Mixta</span><span class="font-semibold text-[var(--green-neon)]">15K</span></li>
+          <li class="flex items-center justify-between"><span>Ranchera</span><span class="font-semibold text-[var(--green-neon)]">16K</span></li>
+          <li class="flex items-center justify-between"><span>La Doña</span><span class="font-semibold text-[var(--green-neon)]">17K</span></li>
+        </ul>
+      </section>
+
+      <!-- SALCHIPAPAS -->
+      <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
+        <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Salchipapas</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center justify-between"><span>Salchipapa Pequeña</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
+          <li class="flex items-center justify-between"><span>Salchipapa Grande</span><span class="font-semibold text-[var(--green-neon)]">15K</span></li>
+          <li class="flex items-center justify-between"><span>Salchipollo Pequeño</span><span class="font-semibold text-[var(--green-neon)]">12K</span></li>
+          <li class="flex items-center justify-between"><span>Salchipollo Grande</span><span class="font-semibold text-[var(--green-neon)]">17K</span></li>
+          <li class="flex items-center justify-between"><span>Choripapa</span><span class="font-semibold text-[var(--green-neon)]">16K</span></li>
+          <li class="flex items-center justify-between"><span>Choripollo</span><span class="font-semibold text-[var(--green-neon)]">18K</span></li>
+        </ul>
+      </section>
+
+      <!-- PERRO CALIENTE -->
+      <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
+        <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Perro Caliente</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center justify-between"><span>Sencillo</span><span class="font-semibold text-[var(--green-neon)]">6K</span></li>
+          <li class="flex items-center justify-between"><span>Mixto</span><span class="font-semibold text-[var(--green-neon)]">8K</span></li>
+          <li class="flex items-center justify-between"><span>Llanero</span><span class="font-semibold text-[var(--green-neon)]">10K</span></li>
+          <li class="flex items-center justify-between"><span>Especial</span><span class="font-semibold text-[var(--green-neon)]">13K</span></li>
+          <li class="flex items-center justify-between"><span>Choriperro</span><span class="font-semibold text-[var(--green-neon)]">13K</span></li>
+        </ul>
+      </section>
+
+      <!-- AREPA BURGER -->
+      <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
+        <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Arepa Burger</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center justify-between"><span>Carne</span><span class="font-semibold text-[var(--green-neon)]">9K</span></li>
+          <li class="flex items-center justify-between"><span>Pollo</span><span class="font-semibold text-[var(--green-neon)]">9K</span></li>
+          <li class="flex items-center justify-between"><span>Mixta</span><span class="font-semibold text-[var(--green-neon)]">11K</span></li>
+          <li class="flex items-center justify-between"><span>Especial</span><span class="font-semibold text-[var(--green-neon)]">13K</span></li>
+        </ul>
+      </section>
+
+      <!-- AREPAS -->
+      <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
+        <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Arepas</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center justify-between"><span>Pollo</span></li>
+          <li class="flex items-center justify-between"><span>Mixtas</span></li>
+          <li class="flex items-center justify-between"><span>Pollo / Tocineta</span></li>
+          <li class="flex items-center justify-between"><span>Pollo / Champiñón</span></li>
+          <li class="flex items-center justify-between"><span>Pollo, Jamón y Queso</span></li>
+          <li class="flex items-center justify-between"><span>Salchicha, Jamón y Queso</span></li>
+          <li class="flex items-center justify-between"><span>Carne Molida con Chorizo</span></li>
+          <li class="flex items-center justify-between"><span>Queso</span></li>
+          <li class="flex items-center justify-between"><span>Molleja</span></li>
+        </ul>
+        <p class="text-xs text-zinc-400 mt-3">Consulta precios al pedir.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- Delivery -->
+  <section id="delivery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14">
+    <div class="grid lg:grid-cols-2 gap-6 items-stretch">
+      <div class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
+        <h3 class="text-2xl font-bold text-[var(--green-neon)] mb-3">Solicitar delivery</h3>
+        <p class="text-zinc-300 mb-6">Entrega en tu zona. Tiempo estimado 30–45 min según demanda.</p>
+
+        <form id="deliveryForm" class="space-y-4">
+          <div>
+            <label class="block text-sm text-zinc-300 mb-1">Nombre</label>
+            <input required type="text" name="nombre" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Tu nombre">
+          </div>
+          <div>
+            <label class="block text-sm text-zinc-300 mb-1">Dirección</label>
+            <input required type="text" name="direccion" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Calle 123 #45-67">
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm text-zinc-300 mb-1">Barrio</label>
+              <input required type="text" name="barrio" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Tu barrio">
+            </div>
+            <div>
+              <label class="block text-sm text-zinc-300 mb-1">Referencia</label>
+              <input type="text" name="referencia" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Punto de referencia (opcional)">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm text-zinc-300 mb-1">Pedido</label>
+            <textarea required name="pedido" rows="3" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Ej: Hamburguesa La Doña + Salchipapa Grande"></textarea>
+          </div>
+          <div class="flex items-center gap-3">
+            <input id="envases" type="checkbox" class="w-5 h-5 rounded bg-[var(--soft)] ring-1 ring-white/10">
+            <label for="envases" class="text-sm text-zinc-300">Deseo cubiertos/servilletas</label>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button type="button" id="cotizarBtn" class="flex-1 px-5 py-3 rounded-xl bg-[var(--green-deep)] text-white ring-2 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">Calcular mensaje</button>
+            <a id="enviarDelivery" target="_blank" rel="noopener" href="#" class="flex-1 text-center px-5 py-3 rounded-xl bg-[var(--green-neon)] text-black font-semibold hover:scale-[1.02] transition pointer-events-none opacity-50">Enviar por WhatsApp</a>
+          </div>
+          <p id="previewMsg" class="text-xs text-zinc-400 whitespace-pre-line mt-1"></p>
+          <p class="text-[11px] text-zinc-500">Este es un demo frontal: el envío se realiza abriendo WhatsApp con tu mensaje listo.</p>
+        </form>
+      </div>
+
+      <!-- Horarios / Info -->
+      <div class="rounded-2xl p-6 glass ring-1 ring-[var(--green-neon)]/30">
+        <h4 class="text-xl font-bold text-[var(--green-neon)] mb-4">Información útil</h4>
+        <ul class="space-y-3 text-zinc-200">
+          <li>• Horario: Lun-Dom 11:00 a 23:00</li>
+          <li>• Cobertura: Centro y alrededores</li>
+          <li>• Pago: Efectivo y transferencias</li>
+        </ul>
+        <div class="mt-6 p-4 rounded-xl bg-black/40 ring-1 ring-white/10">
+          <p class="text-sm text-zinc-300">¿Tienes dudas? Escríbenos al WhatsApp con el botón flotante.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp -->
+  <button id="whatsToggle" aria-label="Abrir WhatsApp" class="fixed bottom-5 right-5 z-40 no-tap-highlight inline-flex items-center gap-2 px-4 py-3 rounded-full bg-[var(--green-neon)] text-black font-bold shadow-lg hover:scale-105 transition">
+    <span>💬</span> <span class="hidden sm:inline">WhatsApp</span>
+  </button>
+
+  <div id="whatsPanel" class="fixed bottom-20 right-5 z-40 w-[92vw] max-w-sm translate-y-6 opacity-0 pointer-events-none transition-all">
+    <div class="rounded-2xl overflow-hidden ring-2 ring-[var(--green-neon)] shadow-2xl">
+      <div class="px-4 py-3 bg-[var(--green-deep)] flex items-center justify-between">
+        <div>
+          <p class="text-sm text-zinc-300">Chat rápido</p>
+          <h5 class="text-lg font-bold text-[var(--green-neon)]">La DoÑa</h5>
+        </div>
+        <button id="whatsClose" class="text-white/80 hover:text-white text-xl">×</button>
+      </div>
+      <div class="bg-[var(--card)] p-4 space-y-3">
+        <div>
+          <label class="block text-sm text-zinc-300 mb-1">Tu nombre</label>
+          <input id="wNombre" type="text" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Cómo te llamas">
+        </div>
+        <div>
+          <label class="block text-sm text-zinc-300 mb-1">Selecciona una pregunta</label>
+          <select id="wPregunta" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none">
+            <option value="Hola, quiero hacer un pedido.">Hola, quiero hacer un pedido.</option>
+            <option value="¿Cuál es el tiempo de entrega aproximado?">¿Cuál es el tiempo de entrega aproximado?</option>
+            <option value="¿Tienen promociones hoy?">¿Tienen promociones hoy?</option>
+            <option value="Quiero una recomendación del chef.">Quiero una recomendación del chef.</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm text-zinc-300 mb-1">Mensaje adicional</label>
+          <textarea id="wMensaje" rows="3" class="w-full px-4 py-3 rounded-xl bg-[var(--soft)] text-white ring-1 ring-white/10 focus:ring-[var(--green-neon)] outline-none" placeholder="Escribe tu pedido o detalle"></textarea>
+        </div>
+        <a id="wEnviar" target="_blank" rel="noopener" href="#" class="block text-center px-5 py-3 rounded-xl bg-[var(--green-neon)] text-black font-semibold hover:scale-[1.02] transition">Enviar a WhatsApp</a>
+        <p class="text-[11px] text-zinc-500">Al hacer clic, se abrirá WhatsApp con tu mensaje listo para enviar al número oficial.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-14 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-3">
+      <p class="text-zinc-400 text-sm">© 2025 La DoÑa. Todos los derechos reservados.</p>
+      <a href="https://leonova-studio.github.io/portfolio/" target="_blank" rel="noopener" class="text-sm text-[var(--green-neon)] hover:underline">Diseñado por: LEONOVA STUDIO</a>
+    </div>
+  </footer>
+
+  <script>
+    // Carousel logic with play/pause and controls
+    (function(){
+      const root = document.getElementById('carousel');
+      const track = root.querySelector('[data-carousel-track]');
+      const slides = Array.from(track.children);
+      const prevBtn = root.querySelector('[data-prev]');
+      const nextBtn = root.querySelector('[data-next]');
+      const dotWrap = root.querySelectorAll('.carousel-dot');
+      const playBtn = root.querySelector('[data-toggle-play]');
+      const playIcon = root.querySelector('[data-play-icon]');
+      const pauseIcon = root.querySelector('[data-pause-icon]');
+      let index = 0;
+      let timer = null;
+      const DURATION = 5000;
+
+      function update(){
+        slides.forEach((s, i)=>{
+          const offset = (i - index) * 100;
+          s.style.transform = `translateX(${offset}%)`;
+        });
+        dotWrap.forEach((d,i)=>{
+          d.setAttribute('aria-current', i===index ? 'true':'false');
+        });
+      }
+      function go(i){
+        index = (i + slides.length) % slides.length;
+        update();
+      }
+      function next(){ go(index+1); }
+      function prev(){ go(index-1); }
+
+      function play(){
+        clearInterval(timer);
+        timer = setInterval(next, DURATION);
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        playBtn.setAttribute('aria-label','Pausar');
+      }
+      function pause(){
+        clearInterval(timer);
+        timer = null;
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        playBtn.setAttribute('aria-label','Reproducir');
+      }
+
+      prevBtn.addEventListener('click', ()=>{ prev(); if(timer) { play(); } });
+      nextBtn.addEventListener('click', ()=>{ next(); if(timer) { play(); } });
+      dotWrap.forEach(d=> d.addEventListener('click', ()=>{ go(+d.dataset.go); if(timer){ play(); } }));
+      playBtn.addEventListener('click', ()=> timer ? pause() : play());
+
+      // Swipe on mobile
+      let startX=null;
+      root.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
+      root.addEventListener('touchend', (e)=>{
+        if(startX===null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if(Math.abs(dx) > 50){ dx<0 ? next() : prev(); if(timer){ play(); } }
+        startX=null;
+      });
+
+      // Start autoplay
+      play();
+    })();
+
+    // Delivery form -> build WhatsApp message
+    (function(){
+      const form = document.getElementById('deliveryForm');
+      const preview = document.getElementById('previewMsg');
+      const cotizarBtn = document.getElementById('cotizarBtn');
+      const enviar = document.getElementById('enviarDelivery');
+      const phone = '573112683691';
+
+      function buildMessage(d){
+        const lines = [
+          'Hola La DoÑa, quiero delivery:',
+          `• Nombre: ${d.nombre}`,
+          `• Dirección: ${d.direccion}`,
+          `• Barrio: ${d.barrio}`,
+          d.referencia ? `• Referencia: ${d.referencia}` : null,
+          `• Pedido: ${d.pedido}`,
+          d.envases ? '• Con cubiertos/servilletas' : null
+        ].filter(Boolean);
+        return lines.join('\n');
+      }
+
+      cotizarBtn.addEventListener('click', ()=>{
+        const data = Object.fromEntries(new FormData(form).entries());
+        data.envases = document.getElementById('envases').checked;
+        // Simple validation
+        if(!data.nombre || !data.direccion || !data.barrio || !data.pedido){
+          preview.textContent = 'Por favor completa los campos requeridos para generar el mensaje.';
+          enviar.classList.add('pointer-events-none','opacity-50');
+          enviar.href = '#';
+          return;
+        }
+        const msg = buildMessage(data);
+        preview.textContent = msg;
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        enviar.href = url;
+        enviar.classList.remove('pointer-events-none','opacity-50');
+      });
+    })();
+
+    // Floating WhatsApp panel
+    (function(){
+      const toggle = document.getElementById('whatsToggle');
+      const panel = document.getElementById('whatsPanel');
+      const close = document.getElementById('whatsClose');
+      const wNombre = document.getElementById('wNombre');
+      const wPregunta = document.getElementById('wPregunta');
+      const wMensaje = document.getElementById('wMensaje');
+      const wEnviar = document.getElementById('wEnviar');
+      const phone = '573112683691';
+      let open = false;
+
+      function setOpen(v){
+        open = v;
+        if(open){
+          panel.style.opacity = '1';
+          panel.style.transform = 'translateY(0)';
+          panel.style.pointerEvents = 'auto';
+        } else {
+          panel.style.opacity = '0';
+          panel.style.transform = 'translateY(24px)';
+          panel.style.pointerEvents = 'none';
+        }
+      }
+      toggle.addEventListener('click', ()=> setOpen(!open));
+      close.addEventListener('click', ()=> setOpen(false));
+
+      function build(){
+        const nombre = wNombre.value?.trim();
+        const pregunta = wPregunta.value || '';
+        const extra = wMensaje.value?.trim();
+        const parts = [
+          nombre ? `Hola, soy ${nombre}.` : 'Hola, buen día.',
+          pregunta,
+          extra ? `Detalle: ${extra}` : null
+        ].filter(Boolean);
+        const text = parts.join('\n');
+        wEnviar.href = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+      }
+      wNombre.addEventListener('input', build);
+      wPregunta.addEventListener('change', build);
+      wMensaje.addEventListener('input', build);
+      build();
+    })();
+
+    // Smooth scroll for in-page links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(id.length>1){
+          const el = document.querySelector(id);
+          if(el){
+            e.preventDefault();
+            el.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        }
+      });
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fbb12e020bb08a',t:'MTc1Nzk3NjcyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
