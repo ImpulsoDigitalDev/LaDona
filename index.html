@@ -17,16 +17,13 @@
     }
     html,body{background:#0b0b0b;}
     body{font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji",sans-serif;}
-    .glass{
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      background: rgba(15, 29, 22, .6);
-    }
+    .glass{ backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); background: rgba(15, 29, 22, .6); }
     .carousel-dot[aria-current="true"]{ background: var(--green-neon); }
     .no-tap-highlight{ -webkit-tap-highlight-color: transparent; }
-    /* Mini badge animation */
     .pop { animation: pop .2s ease; }
     @keyframes pop { from{transform:scale(.9)} to{transform:scale(1)} }
+    .map-wrap { aspect-ratio: 16 / 10; }
+    @media (max-width: 640px){ .map-wrap { aspect-ratio: 16 / 12; } }
   </style>
 </head>
 <body class="text-white">
@@ -65,7 +62,6 @@
     <!-- Carousel Hero -->
     <section class="relative">
       <div id="carousel" class="relative w-full h-[48vh] sm:h-[60vh] lg:h-[70vh] overflow-hidden rounded-none">
-        <!-- Slides -->
         <div class="absolute inset-0 transition-transform duration-700 ease-out will-change-transform" data-carousel-track>
           <!-- Slide 1 -->
           <div class="absolute inset-0 flex items-center justify-center p-8" data-index="0" style="transform: translateX(0%);">
@@ -73,10 +69,7 @@
             <div class="relative max-w-4xl mx-auto text-center">
               <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 text-[var(--green-neon)]">Sabor que enamora</h2>
               <p class="text-base sm:text-lg text-zinc-200 mb-6">Caldos, hamburguesas, salchipapas y más. Todo fresco, al instante.</p>
-              <a href="#menu" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
-                Ver Menú
-                <span aria-hidden="true">→</span>
-              </a>
+              <a href="#menu" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">Ver Menú →</a>
             </div>
           </div>
           <!-- Slide 2 -->
@@ -86,9 +79,7 @@
             <div class="relative max-w-4xl mx-auto text-center">
               <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 text-[var(--green-neon)]">Delivery rápido</h2>
               <p class="text-base sm:text-lg text-zinc-200 mb-6">Pide por WhatsApp y lo llevamos a tu puerta.</p>
-              <a href="#delivery" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-deep)] text-white ring-2 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">
-                Pedir ahora
-              </a>
+              <a href="#delivery" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-deep)] text-white ring-2 ring-[var(--green-neon)] hover:bg-[var(--green-neon)] hover:text-black transition">Pedir ahora</a>
             </div>
           </div>
           <!-- Slide 3 -->
@@ -98,14 +89,11 @@
             <div class="relative max-w-4xl mx-auto text-center">
               <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 text-[var(--green-neon)]">Promos y combos</h2>
               <p class="text-base sm:text-lg text-zinc-200 mb-6">Consulta el menú y descubre tus favoritos.</p>
-              <a href="#menu" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">
-                Ordenar
-              </a>
+              <a href="#menu" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--green-neon)] text-black font-semibold hover:scale-105 transition">Ordenar</a>
             </div>
           </div>
         </div>
 
-        <!-- Controls -->
         <div class="absolute inset-x-0 bottom-4 flex items-center justify-center gap-3">
           <button type="button" data-prev aria-label="Anterior" class="no-tap-highlight inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white ring-1 ring-white/20">‹</button>
           <div class="flex items-center gap-2 px-3 py-2 rounded-full glass ring-1 ring-white/10">
@@ -144,7 +132,6 @@
       <p class="text-zinc-300">Precios en COP</p>
     </div>
 
-    <!-- Menu Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- CALDOS -->
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
@@ -207,11 +194,10 @@
         </ul>
       </section>
 
-      <!-- AREPAS (sin precio, consulta) -->
+      <!-- AREPAS (consulta) -->
       <section class="rounded-2xl p-6 bg-[var(--card)] ring-1 ring-[var(--green-neon)]/30">
         <h3 class="text-xl font-bold mb-4 text-[var(--green-neon)]">Arepas</h3>
         <ul class="space-y-3">
-          <!-- Para estas, agregamos como "consulta" con precio 0 y se indica en WA -->
           <li class="flex items-center justify-between"><span>Pollo</span><button data-add data-id="arepa-pollo" data-name="Arepa de Pollo (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
           <li class="flex items-center justify-between"><span>Mixtas</span><button data-add data-id="arepa-mixta" data-name="Arepa Mixta (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
           <li class="flex items-center justify-between"><span>Pollo / Tocineta</span><button data-add data-id="arepa-pt" data-name="Arepa Pollo/Tocineta (consultar precio)" data-price="0" class="px-3 py-1 rounded-full bg-[var(--green-neon)] text-black text-sm">Añadir</button></li>
@@ -277,6 +263,31 @@
           <li>• Cobertura: Centro y alrededores</li>
           <li>• Pago: Efectivo y transferencias</li>
         </ul>
+
+        <!-- Mapa en vivo con marcador "La DoÑa" -->
+        <div class="mt-6 space-y-3">
+          <div class="relative overflow-hidden rounded-xl ring-1 ring-white/10 bg-black/40">
+            <div class="map-wrap">
+              <iframe
+                title="Mapa de La DoÑa"
+                class="w-full h-full"
+                style="border:0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+                src="https://www.google.com/maps?q=La%20Do%C3%91a&output=embed">
+              </iframe>
+            </div>
+            <div class="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded">La DoÑa (mapa interactivo)</div>
+          </div>
+          <!-- Botón que abre tu link real -->
+          <a href="https://maps.app.goo.gl/dXf8iwd5eUP71y8k7" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-[var(--green-neon)] text-black font-semibold hover:scale-[1.02] transition">
+            Abrir en Google Maps
+            <span aria-hidden>↗</span>
+          </a>
+          <p class="text-[11px] text-zinc-400">Puedes mover, hacer zoom y abrir la ubicación en la app de Maps.</p>
+        </div>
+
         <div class="mt-6 p-4 rounded-xl bg-black/40 ring-1 ring-white/10">
           <p class="text-sm text-zinc-300">¿Tienes dudas? Escríbenos al WhatsApp con el botón flotante.</p>
         </div>
@@ -369,23 +380,16 @@
       const pauseIcon = root.querySelector('[data-pause-icon]');
       let index = 0, timer = null;
       const DURATION = 5000;
-
-      function update(){
-        slides.forEach((s, i)=>{ s.style.transform = `translateX(${(i-index)*100}%)`; });
-        dots.forEach((d,i)=> d.setAttribute('aria-current', i===index ? 'true':'false'));
-      }
+      function update(){ slides.forEach((s, i)=>{ s.style.transform = `translateX(${(i-index)*100}%)`; }); dots.forEach((d,i)=> d.setAttribute('aria-current', i===index ? 'true':'false')); }
       function go(i){ index = (i + slides.length) % slides.length; update(); }
       function next(){ go(index+1); }
       function prev(){ go(index-1); }
       function play(){ clearInterval(timer); timer = setInterval(next, DURATION); playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); playBtn.setAttribute('aria-label','Pausar'); }
       function pause(){ clearInterval(timer); timer = null; playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); playBtn.setAttribute('aria-label','Reproducir'); }
-
       prevBtn.addEventListener('click', ()=>{ prev(); if(timer) play(); });
       nextBtn.addEventListener('click', ()=>{ next(); if(timer) play(); });
       dots.forEach(d=> d.addEventListener('click', ()=>{ go(+d.dataset.go); if(timer) play(); }));
       playBtn.addEventListener('click', ()=> timer ? pause() : play());
-
-      // Swipe
       let startX=null;
       root.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
       root.addEventListener('touchend', (e)=>{
@@ -394,7 +398,6 @@
         if(Math.abs(dx) > 50){ dx<0 ? next() : prev(); if(timer) play(); }
         startX=null;
       });
-
       play();
     })();
 
@@ -405,7 +408,6 @@
       const cotizarBtn = document.getElementById('cotizarBtn');
       const enviar = document.getElementById('enviarDelivery');
       const phone = '573112683691';
-
       function buildMessage(d){
         const lines = [
           'Hola La DoÑa, quiero delivery:',
@@ -418,7 +420,6 @@
         ].filter(Boolean);
         return lines.join('\n');
       }
-
       cotizarBtn.addEventListener('click', ()=>{
         const data = Object.fromEntries(new FormData(form).entries());
         data.envases = document.getElementById('envases').checked;
@@ -447,7 +448,6 @@
       const wEnviar = document.getElementById('wEnviar');
       const phone = '573112683691';
       let open = false;
-
       function setOpen(v){
         open = v;
         panel.style.opacity = v ? '1' : '0';
@@ -456,7 +456,6 @@
       }
       toggle.addEventListener('click', ()=> setOpen(!open));
       close.addEventListener('click', ()=> setOpen(false));
-
       function build(){
         const nombre = wNombre.value?.trim();
         const pregunta = wPregunta.value || '';
@@ -475,7 +474,7 @@
       build();
     })();
 
-    // Cart system -> WhatsApp checkout
+    // Carrito -> WhatsApp checkout
     (function(){
       const phone = '573112683691';
       const cart = new Map(); // id -> {id,name,price,qty}
@@ -514,7 +513,6 @@
         const totalQty = Array.from(cart.values()).reduce((a,i)=> a+i.qty, 0);
         count.textContent = totalQty;
         countM.textContent = totalQty;
-        // small pop
         count.classList.add('pop'); countM.classList.add('pop');
         setTimeout(()=>{ count.classList.remove('pop'); countM.classList.remove('pop'); }, 200);
       }
@@ -544,7 +542,6 @@
         if(cart.size===0){
           list.innerHTML = '<li class="text-sm text-zinc-400">Tu carrito está vacío.</li>';
         }
-        // Enable/disable checkout
         if(cart.size>0){
           checkout.classList.remove('pointer-events-none','opacity-50');
           const text = buildWhatsAppText(subtotal);
@@ -567,7 +564,7 @@
         return lines.join('\n');
       }
 
-      // Handle add buttons
+      // Add buttons
       btns.forEach(b=>{
         b.addEventListener('click', ()=>{
           const id = b.dataset.id;
@@ -579,7 +576,7 @@
         });
       });
 
-      // Delegated inc/dec/remove
+      // Controls inside cart
       list.addEventListener('click', (e)=>{
         const t = e.target;
         if(t.matches('[data-inc]')){
@@ -612,5 +609,5 @@
       });
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fbe8e7a7e2a4b9',t:'MTc1Nzk3OTAwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fc2723070f5c7b',t:'MTc1Nzk4MTU1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
